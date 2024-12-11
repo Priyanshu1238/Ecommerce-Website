@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Page</title>
+
+    <!-- Link to Bootstrap CSS for improved styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link to FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+        }
+        .card-sh {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+            padding: 20px;
+        }
+        .table thead {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .table img {
+            border-radius: 8px;
+        }
+        .table .fa {
+            cursor: pointer;
+            font-size: 18px;
+            color: #007bff;
+        }
+        .table .fa:hover {
+            color: #0056b3;
+        }
+        .total-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .btn-primary {
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .text-success {
+            font-size: 1.1rem;
+        }
+        .text-danger {
+            font-size: 1.1rem;
+        }
+        .fw-bold {
+            font-weight: bold;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <div class="container-fluid mt-5 p-5">
+
+            <div class="card card-sh">
+                <div class="card-header text-center">
+                    <p class="fs-4 mb-0">Your Shopping Cart</p>
+                </div>
+
+                <div class="card-body">
+                    <!-- Success/Error Messages -->
+                    <th:block th:if="${session.succMsg}">
+                        <div class="alert alert-success text-center">
+                            [[${session.succMsg}]]
+                        </div>
+                        <th:block th:text="${@commonServiceImpl.removesession()}"></th:block>
+                    </th:block>
+
+                    <th:block th:if="${session.errorMsg}">
+                        <div class="alert alert-danger text-center">
+                            [[${session.errorMsg}]]
+                        </div>
+                        <th:block th:text="${@commonServiceImpl.removesession()}"></th:block>
+                    </th:block>
+
+                    <!-- Cart Table -->
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">SL No</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col" class="text-center">Quantity</th>
+                                <th scope="col">Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cart, c:${carts}">
+                                <th scope="row">[[${c.count}]]</th>
+                                <td>
+                                    <img th:src="@{'/img/product_img/' + ${cart.product.image}}" width="70" height="70">
+                                </td>
+                                <td>[[${cart.product.title}]]</td>
+                                <td>&#8377;[[${cart.product.discountPrice}]]</td>
+                                <td>
+                                     <a th:href="@{'/user/cartQuantityUpdate?sy=de&cid='+${cart.id}}" >
+                       		       <i class="fa-solid fa-minus"></i>
+    								</a>
+                                    [ [[${cart.quantity}]] ]
+                                    <a th:href="@{'/user/cartQuantityUpdate?sy=in&cid='+${cart.id}}">
+       									 <i class="fa-solid fa-plus"></i>
+                                    </a>
+                                </td>
+                                <td>&#8377;[[${cart.totalPrice}]]</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="fw-bold">Total Price</td>
+                                <td class="fw-bold total-price">&#8377;[[${totalOrderPrice}]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Proceed to Payment -->
+                    <div class="text-center mt-4">
+                        <a href="/user/orders" class="btn btn-primary">Proceed to Pay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optional: Add Bootstrap JS for dynamic features like modals -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

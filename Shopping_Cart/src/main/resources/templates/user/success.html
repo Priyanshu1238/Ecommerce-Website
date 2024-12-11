@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Success</title>
+    <!-- Bootstrap CSS for modern design -->
+</head>
+<body>
+
+<section>
+    <div class="container">
+    
+        <div class="row">
+         
+            <div class="col-md-6 offset-md-3 text-center">
+            <i class="fa-solid fa-circle-check fa-3x text-success"></i>
+            <p class="fs-3">Order Placed Successfully</p>
+            <p class="fs-4">Product will be delivered within 7 days</p>
+            <div class="text-center">
+            
+            <a href="/" class="btn btn-success">Home</a>
+            <a href="/user/user-orders" class="btn btn-success">Your Order</a>
+            <a href="/product" class="btn btn-success">Shop More</a>
+            
+            </div>
+               
+               
+               
+               
+               
+            </div>
+            
+        </div>
+       
+    </div>
+</section>
+
+
+
+</body>
+</html>

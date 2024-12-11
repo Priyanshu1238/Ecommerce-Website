@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <!-- Link to Bootstrap CSS for improved styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link to FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+       <link rel="stylesheet" href="/css/style.css">
+    
+</head>
+<body>
+
+    <section>
+        <div class="container card-sh">
+            <div class="row">
+                <!-- Success/Error Messages -->
+                <th:block th:if="${session.succMsg}">
+                    <p class="text-success fw-bold text-center mb-4">[[${session.succMsg}]]</p>
+                    <th:block th:text="${@commonServiceImpl.removesession()}"></th:block>
+                </th:block>
+
+                <th:block th:if="${session.errorMsg}">
+                    <p class="text-danger fw-bold text-center mb-4">[[${session.errorMsg}]]</p>
+                    <th:block th:text="${@commonServiceImpl.removesession()}"></th:block>
+                </th:block>
+                
+                <!-- Product Information -->
+                <div class="col-md-6 text-center mb-4">
+                    <img alt="Product Image" th:src="@{'/img/product_img/'+${product.image}}"
+                         class="product-img img-fluid" width="330px" height="400px">
+                </div>
+
+                <div class="col-md-6">
+                    <p class="section-title">[[${product.title}]]</p>
+                    <p><span class="fw-bold">Description:</span> <br>[[${product.description}]]</p>
+                    <p><span class="fw-bold">Product Details:</span><br>
+                        
+				Status:
+				<th:block th:if="${product.stock>0}">
+				<span class="badge bg-success">Available</span></th:block>
+				<th:block th:unless="${product.stock>0}">
+				<span class="badge bg-warning"> out of stock</span>
+				</th:block>
+				<br>
+                        Category: [[${product.category}]]<br>Policy: 7 Days Replacement & Return
+                    </p>
+
+                    <p class="price-details">
+                        <i class="fas fa-rupee-sign"></i> [[${product.discountPrice}]]
+                        <span class="old-price">[[${product.price}]]</span>
+                        <span class="text-success">[[${product.discount}]]% off</span>
+                    </p>
+
+                    <!-- Service Benefits -->
+                    <div class="row service-icons mb-4">
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <p>Cash on Delivery</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-undo-alt"></i>
+                            <p>Return Available</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-truck-moving"></i>
+                            <p>Free Shipping</p>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Button -->
+                    <th:block th:if="${product.stock > 0}">
+                        <th:block th:if="${user == null}">
+                            <a href="/signin" class="btn btn-danger product-action-button col-md-12">
+                                Add To Cart
+                            </a>
+                        </th:block>
+                        <th:block th:unless="${user == null}">
+                            <a th:href="@{'/user/addcart?pid=' + ${product.id} + '&uid=' + ${user.id}}"
+                               class="btn btn-danger product-action-button col-md-12">
+                                Add To Cart
+                            </a>
+                        </th:block>
+                    </th:block>
+
+                   <th:block th:unless="${product.stock>0}">
+				<a href="#" class="text-white btn btn-warning col-md-12"> out of stock</a>
+				</th:block>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Optional: Add Bootstrap JS for dynamic features like modals -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
