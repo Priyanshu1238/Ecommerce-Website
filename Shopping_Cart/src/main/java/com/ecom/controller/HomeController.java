@@ -94,7 +94,7 @@ public class HomeController {
 		@GetMapping("/product")
 		public String product(Model m,@RequestParam(value="category",defaultValue="") String category,
 				@RequestParam(name="pageNo",defaultValue ="0") Integer pageNo,
-				@RequestParam(name="pageSize",defaultValue="2") Integer pageSize)
+				@RequestParam(name="pageSize",defaultValue="9") Integer pageSize)
 		{
 			
 			

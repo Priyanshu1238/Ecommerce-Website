@@ -156,5 +156,23 @@ File saveFile=new ClassPathResource("static/img").getFile();
 		
 		return pageProduct;
 	}
+	@Override
+	public Page<Product> searchProductPagination(Integer pageNo, Integer pageSize, String ch) {
+		// TODO Auto-generated method stub
+		
+		Pageable pageable=PageRequest.of(pageNo , pageSize);
+		
+		return pr.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(ch,ch,pageable);
+		
+		
+	}
+	@Override
+	public Page<Product> getAllProductPagination(Integer pageNo, Integer pageSize) {
+		// TODO Auto-generated method stub
+		
+		Pageable pageable=PageRequest.of(pageNo, pageSize);
+		
+		return pr.findAll(pageable);
+	}
 
 }
