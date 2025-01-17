@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,7 +78,18 @@ public class HomeController {
 	
 	
 		@GetMapping("/")
-		public String index() {
+		public String index(Model m) {
+			
+			List<Category> allActiveCategory=cs.getAllActiveCategory().stream()
+					.sorted((c1,c2)->c2.getId().compareTo(c1.getId()))
+					.limit(6).toList();
+			List<Product> allActiveProducts=ps.getAllActiveProduct("").stream()
+					.sorted((p1,p2)->p2.getId().compareTo(p1.getId()))
+					.limit(8).toList();
+			
+			m.addAttribute("category",allActiveCategory);
+			m.addAttribute("products",allActiveProducts);
+			
 			return "index";
 		}
 		
@@ -94,7 +106,7 @@ public class HomeController {
 		@GetMapping("/product")
 		public String product(Model m,@RequestParam(value="category",defaultValue="") String category,
 				@RequestParam(name="pageNo",defaultValue ="0") Integer pageNo,
-				@RequestParam(name="pageSize",defaultValue="9") Integer pageSize)
+				@RequestParam(name="pageSize",defaultValue="9") Integer pageSize,@RequestParam(defaultValue="")String ch)
 		{
 			
 			
@@ -102,11 +114,14 @@ public class HomeController {
 			m.addAttribute("categories", categories);
 			m.addAttribute("paramValue",category);
 			
-			
+			Page<Product>page=null;
 //			List<Product> product=ps.getAllActiveProduct(category);
 //			m.addAttribute("product", product);
-			
-			Page<Product>page=ps.getAllActiveProductPagination(pageNo,pageSize,category);
+			if(ch.equals(" ")){
+			page=ps.getAllActiveProductPagination(pageNo,pageSize,category);}
+			else {
+				page=ps.searchActiveProductPagination(pageNo,pageSize,category,ch);
+			}
 			
 			List<Product> products=page.getContent();
 			
@@ -137,6 +152,12 @@ public class HomeController {
 		@PostMapping("/saveuser")
 		public String saveuser(HttpSession session,@ModelAttribute UserDtls user,@RequestParam("img") MultipartFile file) throws IOException
 		{
+			
+			Boolean existemail=us.existsEmail(user.getEmail());
+			if(existemail)
+			{
+				session.setAttribute("errorMsg","Email already exists");
+			}else {
 			String imgname=file.isEmpty()?"default.jpg":file.getOriginalFilename();
 			user.setProfileImage(imgname);
 			UserDtls saveuser=us.saveUser(user);
@@ -162,7 +183,7 @@ public class HomeController {
 				session.setAttribute("errorMsg","something went wrong");
 			}
 			
-			
+			}
 			return "redirect:/register";
 		}
 		

@@ -10,7 +10,7 @@ public class Category {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	private String name;
 	
@@ -26,7 +26,7 @@ public class Category {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {

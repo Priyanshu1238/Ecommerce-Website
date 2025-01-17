@@ -10,14 +10,18 @@
 <section>
 
  		<div class="container mt-5 p-5">
+ 		
+ 		<div class="col-auto">
+                <a href="/admin/" class="text-decoration-none btn btn-primary p-10"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            </div>
+ 		
+ 		
   			<div class="row">
-  				<div class="col-md-5 p-5">
-  					<img src="img/ecom.png" width="100%" height="400px">
-  				</div>
-  				<div class="col-md-7 p-2">
+  				
+  				<div class="col-md-7 p-2 offset-md-2">
   					<div class="card shadow p-3 bg-body-tertiary rounded">
   						<div class="card-header text-center">
-  							<p class="fs-4 text-center">Register</p>
+  							<p class="fs-4 text-center">Add Admin</p>
   							
   							
   							
@@ -44,15 +48,13 @@
   							
   						</div>
   						<div class="card-body">
-  							<form action="/saveuser" method="post" enctype="multipart/form-data"
-  							id="userRegister" novalidate
-  							>
+  							<form action="/admin/save-admin" method="post" enctype="multipart/form-data">
   							
   							<div class="row">
   							
   								<div class="col">
   									<label class="form-label">Full Name</label>
-  									<input required class="form-control" name="name" type="text" >
+  									<input class="form-control" name="name" type="text" required>
   								</div>
   								
   								<div class="col">
@@ -104,12 +106,12 @@
   							
   								<div class="col">
   									<label class="form-label">Password</label>
-  									<input class="form-control" id="pass" name="password" type="password" required>
+  									<input class="form-control" name="password" type="password" required>
   								</div>
   								
   								<div class="col">
   									<label class="form-label">Confirm Password</label>
-  									<input class="form-control" name="confirmpassword" type="password" required>
+  									<input class="form-control" name="cpassword" type="password" required>
   								</div>
   								
   								</div>
@@ -134,11 +136,7 @@
   							
   						</div>
   						
-  						<div class="card-footer text-center ">
   						
-  							Already registered?
-  							<a href="/signin" class="text-decoration-none"> Login </a>
-  						</div>
   						
   						
   						

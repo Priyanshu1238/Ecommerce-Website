@@ -49,15 +49,15 @@
 <div class="container my-5">
   <h3 class="text-center mb-4 fs-3">Shop by Category</h3>
   <div class="row justify-content-center">
-    <div class="col-md-2">
+    <div class="col-md-2" th:each="c:${category}">
       <div class="card rounded shadow-sm mb-4 category-card">
-        <img src="img/category_img/appli.png" class="card-img-top" alt="Electronics" height="150px">
+        <img th:src="@{'img/category_img/'+${c.imagename}}" class="card-img-top" alt="Electronics" height="150px">
         <div class="card-body text-center">
-          <p class="card-text">Electronics</p>
+          <a th:href="@{'/product?category='+${c.name}}" class="text-decoration-none text-dark">[[${c.name}]]</a>
         </div>
       </div>
     </div>
-    <div class="col-md-2">
+    <!--  <div class="col-md-2">
       <div class="card rounded shadow-sm mb-4 category-card">
         <img src="img/category_img/beuty.png" class="card-img-top" alt="Beauty" height="150px">
         <div class="card-body text-center">
@@ -96,7 +96,7 @@
           <p class="card-text">Clothes</p>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </div>
 
@@ -104,6 +104,16 @@
 <div class="container-fluid bg-light p-4">
   <h3 class="text-center mb-4 fs-3">Latest Products</h3>
   <div class="row">
+    <div class="col-md-2" th:each="p:${products}">
+      <div class="card shadow-sm mb-4 product-card">
+        <img th:src="@{'img/product_img/'+${p.image}}" class="card-img-top" alt="Dell Laptop" height="150px">
+        <div class="card-body text-center">
+          <a th:href="@{'/view_product/'+${p.id}}" class="card-title text-decoration-none text-dark">[[${p.title}]]</a>
+         
+        </div>
+      </div>
+    </div>
+    <!-- 
     <div class="col-md-3">
       <div class="card shadow-sm mb-4 product-card">
         <img src="img/product_img/laptop.jpg" class="card-img-top" alt="Dell Laptop" height="200px">
@@ -130,16 +140,7 @@
           <p class="card-text">Starting at $499</p>
         </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card shadow-sm mb-4 product-card">
-        <img src="img/product_img/laptop.jpg" class="card-img-top" alt="Dell Laptop" height="200px">
-        <div class="card-body text-center">
-          <h5 class="card-title">Dell Laptop</h5>
-          <p class="card-text">Starting at $499</p>
-        </div>
-      </div>
-    </div>
+    </div> -->
   </div>
 </div>
 

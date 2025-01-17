@@ -11,6 +11,8 @@ public interface UserService {
 
 	public UserDtls saveUser(UserDtls user);
 	
+	public UserDtls saveAdmin(UserDtls user);
+	
 	public UserDtls getUserByEmail(String email);
 	
 	public List<UserDtls> getAllUser(String role);
@@ -32,4 +34,7 @@ public interface UserService {
 	public UserDtls updateUser(UserDtls user);
 	
 	public UserDtls updateUserProfile(UserDtls user,MultipartFile img) throws IOException;
+	
+	public Boolean existsEmail(String email);
+	
 }

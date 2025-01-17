@@ -187,4 +187,24 @@ public class UserServiceimpl implements UserService {
 		return dbUser;
 	}
 
+	@Override
+	public UserDtls saveAdmin(UserDtls user) {
+		user.setRole("ROLE_ADMIN");
+		user.setIsEnable(true);
+		user.setAccountNonLocked(true);
+		user.setFailedAttempt(0);
+		//user.setLockTime(null);
+		String encodedpass=pe.encode(user.getPassword());
+		user.setPassword(encodedpass);
+		UserDtls saveuser=ur.save(user);
+		return saveuser;
+	}
+
+	@Override
+	public Boolean existsEmail(String email) {
+		// TODO Auto-generated method stub
+		
+		return ur.existsByEmail(email);
+	}
+
 }
